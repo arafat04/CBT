@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Cognitive Distortions Quiz</title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 30px;
+    background: #f8f8f8;
+}
+h1 {
+    text-align: center;
+}
+.question {
+    background: #ffffff;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 6px;
+}
+.option {
+    display: block;
+    margin: 5px 0;
+}
+.correct {
+    color: green;
+    font-weight: bold;
+}
+.wrong {
+    color: red;
+    font-weight: bold;
+}
+button {
+    padding: 10px 15px;
+    margin: 10px 5px;
+    cursor: pointer;
+}
+#explanation {
+    background: #eef6ff;
+    padding: 15px;
+    margin-top: 30px;
+    border-left: 4px solid #2b6cb0;
+    display: none;
+}
+</style>
+</head>
+<body>
+
+<h1>Cognitive Distortions Self-Assessment Quiz</h1>
+
+<button onclick="shuffleQuestions()">Shuffle Questions</button>
+<button onclick="submitQuiz()">Submit Quiz</button>
+
+<div id="quiz"></div>
+
+<div id="explanation">
+<h3>Explanation for Question 1</h3>
+<p>
+Any answer(s) you selected were correct. Each statement reflects a different
+cognitive distortion:
+</p>
+<ul>
+<li><strong>All-or-nothing thinking:</strong> “I’m a total failure.”</li>
+<li><strong>Overgeneralization:</strong> “I never do anything right.”</li>
+<li><strong>Magnification:</strong> “I can’t stand it.”</li>
+<li><strong>Labeling:</strong> Calling yourself a “slave” and your husband “a jerk.”</li>
+</ul>
+<p>
+The situation (overcooked meat) does not define your worth. Multiple distortions
+are operating simultaneously.
+</p>
+</div>
+
+<script>
+const questions = [
+{
+text: "1. Your distortions include:",
+options: [
+"All-or-nothing thinking",
+"Overgeneralization",
+"Magnification",
+"Labeling",
+"All of the above"
+],
+correct: [0,1,2,3,4]
+},
+{
+text: "2. Your distortions include:",
+options: [
+"Jumping to conclusions (fortune teller error)",
+"Overgeneralization",
+"All-or-nothing thinking",
+"Personalization",
+"Emotional reasoning"
+],
+correct: [0,1,4]
+},
+{
+text: "3. Your distortions include:",
+options: [
+"All-or-nothing thinking",
+"Jumping to conclusions (negative prediction)",
+"Mental filter",
+"Disqualifying the positive",
+"Magnification"
+],
+correct: [0,1,3,4]
+},
+{
+text: "4. Your errors involve:",
+options: [
+"Labeling",
+"Magnification",
+"Jumping to conclusions",
+"Emotional reasoning",
+"Personalization"
+],
+correct: [0,2,3]
+},
+{
+text: "5. Your distortions include:",
+options: [
+"All-or-nothing thinking",
+"Disqualifying the positive",
+"Mental filter",
+"Personalization",
+"Should statements"
+],
+correct: [0,2]
+},
+{
+text: "6. Your thinking errors involve:",
+options: [
+"All-or-nothing thinking",
+"Disqualifying the positive",
+"Jumping to conclusions",
+"Minimization",
+"Labeling"
+],
+correct: [0,2,4]
+},
+{
+text: "7. Your thinking errors include:",
+options: [
+"All-or-nothing thinking",
+"Should statements",
+"Jumping to conclusions",
+"Personalization",
+"Overgeneralization"
+],
+correct: [2,3]
+},
+{
+text: "8. Your thinking errors include:",
+options: [
+"Jumping to conclusions",
+"Overgeneralization",
+"Labeling",
+"Magnification",
+"Emotional reasoning"
+],
+correct: [0,1,2,3,4]
+},
+{
+text: "9. Your distortions include:",
+options: [
+"Disqualifying the positive",
+"Should statements",
+"Emotional reasoning",
+"All-or-nothing thinking",
+"Jumping to conclusions"
+],
+correct: [0,1,2,3,4]
+},
+{
+text: "10. Your distortions include:",
+options: [
+"All-or-nothing thinking",
+"Mislabeling",
+"Negative prediction",
+"Should statements",
+"Disqualifying the positive"
+],
+correct: [0,1,2,3,4]
+}
+];
+
+let quizContainer = document.getElementById("quiz");
+
+function renderQuiz() {
+quizContainer.innerHTML = "";
+questions.forEach((q, qi) => {
+let div = document.createElement("div");
+div.className = "question";
+div.innerHTML = `<p><strong>${q.text}</strong></p>`;
+q.options.forEach((opt, oi) => {
+div.innerHTML += `
+<label class="option">
+<input type="checkbox" name="q${qi}" value="${oi}"> ${opt}
+</label>`;
+});
+quizContainer.appendChild(div);
+});
+}
+
+function submitQuiz() {
+questions.forEach((q, qi) => {
+let inputs = document.querySelectorAll(`input[name="q${qi}"]`);
+inputs.forEach(input => {
+let index = parseInt(input.value);
+let label = input.parentElement;
+if (q.correct.includes(index)) {
+label.classList.add("correct");
+}
+if (input.checked && !q.correct.includes(index)) {
+label.classList.add("wrong");
+}
+});
+});
+document.getElementById("explanation").style.display = "block";
+}
+
+function shuffleQuestions() {
+for (let i = questions.length - 1; i > 0; i--) {
+const j = Math.floor(Math.random() * (i + 1));
+[questions[i], questions[j]] = [questions[j], questions[i]];
+}
+renderQuiz();
+}
+
+renderQuiz();
+</script>
+
+</body>
+</html>
