@@ -3,47 +3,92 @@
 <head>
 <meta charset="UTF-8">
 <title>Cognitive Distortions Quiz</title>
+
 <style>
 body {
     font-family: Arial, sans-serif;
+    background: #f5f5f5;
     margin: 30px;
-    background: #f8f8f8;
 }
+
 h1 {
     text-align: center;
 }
+
 .question {
     background: #ffffff;
     padding: 15px;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
     border-radius: 6px;
 }
+
+.question p {
+    white-space: pre-line;
+}
+
 .option {
     display: block;
-    margin: 5px 0;
+    margin: 6px 0;
 }
+
 .correct {
     color: green;
     font-weight: bold;
 }
+
 .wrong {
     color: red;
     font-weight: bold;
 }
+
 button {
-    padding: 10px 15px;
-    margin: 10px 5px;
+    padding: 8px 12px;
+    margin-top: 10px;
     cursor: pointer;
 }
+
 #explanation {
     background: #eef6ff;
-    padding: 15px;
-    margin-top: 30px;
-    border-left: 4px solid #2b6cb0;
+    padding: 20px;
+    margin-top: 40px;
+    border-left: 5px solid #2b6cb0;
     display: none;
+}
+
+/* Modal */
+#definitionsModal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    z-index: 1000;
+    display: none;
+}
+
+#definitionsContent {
+    background: white;
+    width: 80%;
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 25px;
+    border-radius: 8px;
+    max-height: 85%;
+    overflow-y: auto;
+    position: relative;
+}
+
+#closeModal {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 28px;
+    cursor: pointer;
 }
 </style>
 </head>
+
 <body>
 
 <h1>Cognitive Distortions Self-Assessment Quiz</h1>
@@ -54,10 +99,9 @@ button {
 <div id="quiz"></div>
 
 <div id="explanation">
-<h3>Explanation for Question 1</h3>
+<h2>Explanation for Question 1</h2>
 <p>
-Any answer(s) you selected were correct. Each statement reflects a different
-cognitive distortion:
+Any answer(s) you selected were correct. Multiple distortions are present:
 </p>
 <ul>
 <li><strong>All-or-nothing thinking:</strong> “I’m a total failure.”</li>
@@ -66,22 +110,86 @@ cognitive distortion:
 <li><strong>Labeling:</strong> Calling yourself a “slave” and your husband “a jerk.”</li>
 </ul>
 <p>
-The situation (overcooked meat) does not define your worth. Multiple distortions
-are operating simultaneously.
+An overcooked roast does not define your worth. These thoughts exaggerate,
+globalize, and mislabel a minor event.
+
+    
+Long answer:
+
+    Now I will discuss the correct answers to this question so you can
+get some immediate feedback. Any answer(s) you might have circled
+was (were) correct. So if you circled anything, you were right! Here’s
+why. When you tell yourself, “I’m a fofal failure,” you engage in all-
+or-nothing thinking. Cut it out! The meat was a little dry, but that
+doesn’t make your entire life a total failure. When you think, “I never
+do anything right,” you are overgeneralizing. Never? Come on now!
+Not anything? When you tell yourself, “I can’t stand it,” you are
+magnifying the pain you are feeling. You're blowing it way out of
+proportion because you are standing it, and if you are, you can. Your
+husband’s grumbling is not exactly what you like to hear, but it’s
+not a reflection of your worth. Finally, when you proclaim, “I work
+like a slave and this is all the thanks I get! The jerk!” you are
+labeling both of you. He’s not a jerk, he’s just being irritable and
+insensitive. Jerky behavior exists, but jerks do not. Similarly, it’s silly
+to label yourself a slave. You're just letting his moodiness sour your
+evening.
 </p>
+</div>
+
+<!-- Definitions Modal -->
+<div id="definitionsModal">
+  <div id="definitionsContent">
+    <span id="closeModal" onclick="closeDefinitions()">×</span>
+
+    <h2>Cognitive Distortions — Definitions</h2>
+
+    <p><strong>1. All-or-Nothing Thinking</strong><br>
+    You see things in black-and-white categories. If your performance falls short
+    of perfect, you see yourself as a total failure.</p>
+
+    <p><strong>2. Overgeneralization</strong><br>
+    You see a single negative event as a never-ending pattern of defeat.</p>
+
+    <p><strong>3. Mental Filter</strong><br>
+    You focus on one negative detail so intensely that your view of reality becomes darkened.</p>
+
+    <p><strong>4. Disqualifying the Positive</strong><br>
+    You reject positive experiences by insisting they “don’t count.”</p>
+
+    <p><strong>5. Jumping to Conclusions</strong><br>
+    You make negative interpretations without evidence.
+    <br><em>Mind Reading:</em> Assuming others are reacting negatively.
+    <br><em>Fortune Teller Error:</em> Predicting a negative outcome as fact.</p>
+
+    <p><strong>6. Magnification (Catastrophizing) or Minimization</strong><br>
+    You exaggerate problems or shrink positive qualities.</p>
+
+    <p><strong>7. Emotional Reasoning</strong><br>
+    You believe that because you feel something, it must be true.</p>
+
+    <p><strong>8. Should Statements</strong><br>
+    You motivate with “shoulds,” “musts,” and “oughts,” leading to guilt or anger.</p>
+
+    <p><strong>9. Labeling and Mislabeling</strong><br>
+    You attach global negative labels instead of describing specific behavior.</p>
+
+    <p><strong>10. Personalization</strong><br>
+    You assume responsibility for negative events beyond your control.</p>
+  </div>
 </div>
 
 <script>
 const questions = [
 {
-text: `1. You are a housewife, and your heart sinks when your husband has just complained disgruntledly that the roast beef was overdone.
+body: `You are a housewife, and your heart sinks when your husband
+has just complained disgruntledly that the roast beef was overdone.
 The following thought crosses your mind:
+“I’m a total failure. I
+can’t stand it! I never do anything right. I work like a slave and this
+is all the thanks I get! The jerk!” These thoughts cause you to feel
+sad and angry.
 
-“I’m a total failure. I can’t stand it! I never do anything right.
-I work like a slave and this is all the thanks I get! The jerk!”
-
-These thoughts cause you to feel sad and angry.
-Your distortions include one or more of the following:`,
+Your distortions include:`,
 options: [
 "All-or-nothing thinking",
 "Overgeneralization",
@@ -92,7 +200,15 @@ options: [
 correct: [0,1,2,3,4]
 },
 {
-text: "2. Your distortions include:",
+body: `You have just read the sentence in which I informed you that
+you would have to take this self-assessment quiz. Your heart suddenly
+sinks and you think:
+
+“Oh no, not another test! I always do lousy on
+tests. I'll have to skip this section of the book. It makes me nervous,
+so it wouldn’t help anyway.”
+
+Your distortions include:`,
 options: [
 "Jumping to conclusions (fortune teller error)",
 "Overgeneralization",
@@ -100,13 +216,24 @@ options: [
 "Personalization",
 "Emotional reasoning"
 ],
-correct: [0,1,4]
+correct: [0,1,2,4]
 },
 {
-text: "3. Your distortions include:",
+body: `You are a psychiatrist at the University of Pennsylvania. You
+are attempting to revise your manuscript on depression after meeting
+with your editor in New York. Although your editor seemed extremely
+enthusiastic, you notice you are feeling nervous and inadequate due
+to your thoughts:
+
+“They made a terrible mistake when they chose my
+book! I won't be able to do a good job. I’ll never be able to make the
+book fresh, lively, and punchy. My writing is too drab, and my ideas
+aren’t good enough.”
+
+Your distortions include:`,
 options: [
 "All-or-nothing thinking",
-"Jumping to conclusions (negative prediction)",
+"Jumping to conclusions",
 "Mental filter",
 "Disqualifying the positive",
 "Magnification"
@@ -114,7 +241,14 @@ options: [
 correct: [0,1,3,4]
 },
 {
-text: "4. Your errors involve:",
+body: `You are lonely and you decide to attend a social affair for
+singles. Soon after you get there, you have the urge to leave because
+you feel anxious and defensive. The following thoughts run through
+your mind: “They probably aren’t very interesting people. Why tor-
+ture myself? They’re just a bunch of losers. I can tell because I feel
+so bored. This party will be a drag.”
+
+Your errors involve:`,
 options: [
 "Labeling",
 "Magnification",
@@ -122,10 +256,17 @@ options: [
 "Emotional reasoning",
 "Personalization"
 ],
-correct: [0,2,3]
+correct: [0,1,2,3]
 },
 {
-text: "5. Your distortions include:",
+body: `You receive a layoff notice from your employer. You feel mad
+and frustrated. You think, “This proves the world is no damn good.
+I never get a break.” Your distortions include:
+
+“The world is no damn good.
+I never get a break.”
+
+Your distortions include:`,
 options: [
 "All-or-nothing thinking",
 "Disqualifying the positive",
@@ -136,7 +277,13 @@ options: [
 correct: [0,2]
 },
 {
-text: "6. Your thinking errors involve:",
+body: `You are about to give a lecture and you notice wtict your heart
+is pounding. You feel tense and nervous because you think, “My
+God, I'll probably forget what I'm supposed to say. My speech isn’t
+any good anyway. My mind will blank out. I'll make a fool of my-
+self.”
+
+Your thinking errors involve:`,
 options: [
 "All-or-nothing thinking",
 "Disqualifying the positive",
@@ -144,10 +291,13 @@ options: [
 "Minimization",
 "Labeling"
 ],
-correct: [0,2,4]
+correct: [0,2,3,4]
 },
 {
-text: "7. Your thinking errors include:",
+body: `Your date calls you at the last minute to cancel out because of
+illness. You feel angry and disappointed because you think, “I’m
+getting jilted. What did I do to foul things up?” Your thinking errors
+include: `,
 options: [
 "All-or-nothing thinking",
 "Should statements",
@@ -158,7 +308,12 @@ options: [
 correct: [2,3]
 },
 {
-text: "8. Your thinking errors include:",
+body: `You have put off writing a report for work. Every night when
+you try to get down to it, the whole project seems so difficult that you
+watch TV instead. You begin to feel overwhelmed and guilty. You
+are thinking the following: “I’m so lazy I'll never get this done. I
+just can’t do the darn thing. It would take forever. It won’t turn out
+right anyway.” Your thinking errors include:`,
 options: [
 "Jumping to conclusions",
 "Overgeneralization",
@@ -169,7 +324,16 @@ options: [
 correct: [0,1,2,3,4]
 },
 {
-text: "9. Your distortions include:",
+body: `You’ve read this entire book and after applying the methods
+for several weeks, you begin to feel better. Your BDI score went down
+from twenty-six (moderately depressed) to eleven (borderline de-
+pression). Then you suddenly begin to feel worse, and in three days
+your score has gone back up to twenty-eight. You feel disillusioned,
+hopeless, bitter, and desperate due to thinking, “I’m not getting any-
+where. These methods won’t help me after all. I should be well by
+now. That ‘improvement’ was a fluke. I was fooling myself when I
+thought I was feeling better. Pll never get well.” Your cognitive
+distortions include:`,
 options: [
 "Disqualifying the positive",
 "Should statements",
@@ -180,7 +344,14 @@ options: [
 correct: [0,1,2,3,4]
 },
 {
-text: "10. Your distortions include:",
+body: `You’ve been trying to diet. This weekend you've been nervous,
+and, since you didn’t have anything to do, you’ve been nibbling, nib-
+bling. After your fourth piece of candy, you tell yourself, “I just can’t
+control myself. My dieting and jogging all week have gone down the
+drain. I must look like a balloon. I shouldn’t have eaten that. I can’t
+stand this. I’m going to pig out all weekend!” You begin to feel so
+guilty you push another handful of candy into your mouth in an abor-
+tive effort to feel better. Your distortions include:`,
 options: [
 "All-or-nothing thinking",
 "Mislabeling",
@@ -192,47 +363,56 @@ correct: [0,1,2,3,4]
 }
 ];
 
-let quizContainer = document.getElementById("quiz");
+const quiz = document.getElementById("quiz");
 
 function renderQuiz() {
-quizContainer.innerHTML = "";
-questions.forEach((q, qi) => {
-let div = document.createElement("div");
-div.className = "question";
-div.innerHTML = `<p><strong>${q.text}</strong></p>`;
-q.options.forEach((opt, oi) => {
-div.innerHTML += `
-<label class="option">
-<input type="checkbox" name="q${qi}" value="${oi}"> ${opt}
-</label>`;
-});
-quizContainer.appendChild(div);
-});
+    quiz.innerHTML = "";
+    questions.forEach((q, qi) => {
+        let div = document.createElement("div");
+        div.className = "question";
+        div.innerHTML = `<p>${q.body}</p>`;
+        q.options.forEach((opt, oi) => {
+            div.innerHTML += `
+            <label class="option">
+                <input type="checkbox" name="q${qi}" value="${oi}">
+                ${opt}
+            </label>`;
+        });
+        div.innerHTML += `
+        <button type="button" onclick="openDefinitions()">
+            See definitions of cognitive distortions
+        </button>`;
+        quiz.appendChild(div);
+    });
 }
 
 function submitQuiz() {
-questions.forEach((q, qi) => {
-let inputs = document.querySelectorAll(`input[name="q${qi}"]`);
-inputs.forEach(input => {
-let index = parseInt(input.value);
-let label = input.parentElement;
-if (q.correct.includes(index)) {
-label.classList.add("correct");
-}
-if (input.checked && !q.correct.includes(index)) {
-label.classList.add("wrong");
-}
-});
-});
-document.getElementById("explanation").style.display = "block";
+    questions.forEach((q, qi) => {
+        let inputs = document.querySelectorAll(\`input[name="q\${qi}"]\`);
+        inputs.forEach(input => {
+            let idx = parseInt(input.value);
+            let label = input.parentElement;
+            if (q.correct.includes(idx)) label.classList.add("correct");
+            if (input.checked && !q.correct.includes(idx)) label.classList.add("wrong");
+        });
+    });
+    document.getElementById("explanation").style.display = "block";
 }
 
 function shuffleQuestions() {
-for (let i = questions.length - 1; i > 0; i--) {
-const j = Math.floor(Math.random() * (i + 1));
-[questions[i], questions[j]] = [questions[j], questions[i]];
+    for (let i = questions.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        [questions[i], questions[j]] = [questions[j], questions[i]];
+    }
+    renderQuiz();
 }
-renderQuiz();
+
+function openDefinitions() {
+    document.getElementById("definitionsModal").style.display = "block";
+}
+
+function closeDefinitions() {
+    document.getElementById("definitionsModal").style.display = "none";
 }
 
 renderQuiz();
